@@ -26,4 +26,6 @@ urlpatterns = [
     path('lab2/', reviews_views.lab2_queries, name='lab2-queries'),
     path('update-f/', reviews_views.update_ratings, name='update-f'),
     path('profiling/', reviews_views.profiling_view, name='profiling-view'),
+    path('heavy-cache/', reviews_views.heavy_query_view, name='heavy-cache-view'),
+    path('heavy-tasks/', reviews_views.heavy_tasks_view, name='heavy-tasks-view'),
 ]

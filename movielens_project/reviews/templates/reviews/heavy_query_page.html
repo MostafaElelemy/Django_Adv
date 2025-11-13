@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>Heavy Query Cache</title></head>
+<body>
+    <h1>Low-Level Cache Test (Heavy ORM Query)</h1>
+    
+
+    <h2>Stats (from cache):</h2>
+    <p>Total Genres: {{ stats.total_genres }}</p>
+    <ul>
+        {% for name in stats.genre_names %}
+            <li>{{ name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

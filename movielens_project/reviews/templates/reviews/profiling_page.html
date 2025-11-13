@@ -1,4 +1,3 @@
-<!-- reviews/templates/reviews/profiling_page.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,19 +5,18 @@
 </head>
 <body>
     <h1>View Profiling Test</h1>
-    <p>
-    N+1.
-        <br>
-    ـ Debug Toolbar،Silk UI.
-    </p>
-
     <h2>Ratings (N+1 Problem)</h2>
-    <ul>
-        {% for r in ratings_list %}
-            <li>
-                <b>{{ r.title }}</b> - Rating: {{ r.rating }}
-            </li>
-        {% endfor %}
-    </ul>
+
+    {% cache 600 ratings_list_fragment %}
+        <p>(دي لستة جاية من الكاش)</p>
+        <ul>
+            {% for r in ratings_list %}
+                <li>
+                    <b>{{ r.title }}</b> - Rating: {{ r.rating }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endcache %}
+
 </body>
 </html>

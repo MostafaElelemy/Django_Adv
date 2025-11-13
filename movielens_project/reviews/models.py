@@ -14,8 +14,8 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
     
-    # (1) --- ضيف الـ Meta class دي ---
-    # دي هتعمل Index على حقل الـ title
+    
+    
     class Meta:
         indexes = [
             models.Index(fields=['title']),
@@ -24,8 +24,8 @@ class Movie(models.Model):
 class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="ratings")
     
-    # (2) --- ضيف db_index=True هنا ---
-    # دي هتعمل Index على حقل الـ rating
+    
+    
     rating = models.FloatField(db_index=True)
     
     def __str__(self):
