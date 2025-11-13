@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ratings</title>
+</head>
+<body>
+    <h1>Movie Ratings</h1>
+    <ul>
+        {% for r in ratings_list %}
+            <li>
+                <b>{{ r.movie.title }}</b> - Rating: {{ r.rating }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
