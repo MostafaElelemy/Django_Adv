@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAB 2 Queries</title>
+</head>
+<body style="font-family: sans-serif; line-height: 1.6;">
+
+    <h2>1. نتيجة البحث بـ Q() (أفلام "Dark" أو "War"):</h2>
+    <ul>
+        {% for movie in movies_with_q %}
+            <li>{{ movie.title }}</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <h2>4. نتيجة البحث بـ .values() (Result is dict):</h2>
+    <pre>
+    {% for item in ratings_dict %}
+        {{ item }}
+    {% endfor %}
+    </pre>
+
+    <hr>
+    <h2>5. نتيجة البحث بـ .values_list() (Result is tuple):</h2>
+    <pre>
+    {% for item in ratings_tuple %}
+        {{ item }}
+    {% endfor %}
+    </pre>
+
+    <hr>
+    <h3>(بص على شاشة الترمينال عشان تشوف نتايج .only() و .defer())</h3>
+
+</body>
+</html>
