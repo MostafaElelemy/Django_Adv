@@ -1,0 +1,24 @@
+<!-- reviews/templates/reviews/profiling_page.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profiling Page</title>
+</head>
+<body>
+    <h1>View Profiling Test</h1>
+    <p>
+        الصفحة دي فيها (1) دالة بطيئة و (2) كويري N+1.
+        <br>
+        بص على الترمينال، والـ Debug Toolbar، والـ Silk UI.
+    </p>
+
+    <h2>Ratings (N+1 Problem)</h2>
+    <ul>
+        {% for r in ratings_list %}
+            <li>
+                <b>{{ r.title }}</b> - Rating: {{ r.rating }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

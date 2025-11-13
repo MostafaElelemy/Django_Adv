@@ -21,7 +21,9 @@ from reviews import views as reviews_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('silk/', include('silk.urls', namespace='silk')),
     path('ratings/', reviews_views.show_ratings, name='show-ratings'),
     path('lab2/', reviews_views.lab2_queries, name='lab2-queries'),
     path('update-f/', reviews_views.update_ratings, name='update-f'),
+    path('profiling/', reviews_views.profiling_view, name='profiling-view'),
 ]

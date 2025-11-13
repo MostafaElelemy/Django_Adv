@@ -1,4 +1,8 @@
 from django.shortcuts import render
+import cProfile
+import pstats
+import io
+import time
 
 # Create your views here.
 
@@ -123,3 +127,64 @@ def update_ratings(request):
     <p>... اعمل ريفرش عشان تنفذ الكود تاني (هتلاقي الأرقام اتغيرت) ...</p>
     """
     return HttpResponse(response_text)
+
+def profile_view(func):
+    """
+    Decorator بسيط بيشغل cProfile على أي View
+    وبيطبع النتيجة في الكونسول (الترمينال).
+    """
+    def wrapper(request, *args, **kwargs):
+        # ابدأ الـ Profiler
+        pr = cProfile.Profile()
+        pr.enable()
+        
+        # شغل الـ View الأصلي
+        response = func(request, *args, **kwargs)
+        
+        # وقف الـ Profiler
+        pr.disable()
+        
+        # اطبع النتايج في الترمينال
+        s = io.StringIO()
+        sortby = 'cumulative' # رتب بالوقت التراكمي
+        ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+        ps.print_stats(30) # اطبع أهم 30 function
+        
+        print("\n" + "="*80)
+        print(f"--- cProfile Results for: {func.__name__} ---")
+        print(s.getvalue())
+        print("="*80 + "\n")
+        
+        return response
+    return wrapper
+
+
+# ... (سيب الـ views القديمة بتاعتك زي ما هي) ...
+# show_ratings, lab2_queries, update_ratings
+
+
+# --- (3) ضيف الـ View "البطيء" ده ---
+# ده الـ View اللي هنطبق عليه اللاب
+@profile_view  # <--- شغل الـ Profiler بتاعنا عليه
+def profiling_view(request):
+    
+    # (أ) مشكلة "دالة بطيئة" (زي API call أو حسبة معقدة)
+    # هنخلي الكود "ينام" 0.1 ثانية عشان نشوفها في التحليل
+    time.sleep(0.1) 
+
+    # (ب) مشكلة "N+1 Query" (اللي اكتشفناها في لاب 1)
+    # ده الكود الكويس دلوقتي
+    ratings = Rating.objects.select_related('movie').all()[:20]
+    
+    # بنحضر الداتا عشان نعرضها في الـ Template
+    ratings_data = []
+    for r in ratings:
+        ratings_data.append({
+            'title': r.movie.title, # <--- دي اللي بتعمل N+1
+            'rating': r.rating
+        })
+
+    context = {
+        'ratings_list': ratings_data
+    }
+    return render(request, 'reviews/profiling_page.html', context)
